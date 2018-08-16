@@ -58,6 +58,7 @@ app.post('/user', (req, res) => {
 })
 
 app.delete('/posts/:id', (req, res) => {
+  console.log(req.params)
   let id = req.params.id;
   db.deletePostById(id)
     .then((data) => {
