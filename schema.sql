@@ -5,6 +5,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE posts (
+  post_id serial PRIMARY KEY,
   title varchar,
   category varchar,
   content varchar,
