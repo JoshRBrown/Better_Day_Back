@@ -10,7 +10,7 @@ const db = pgp(cn);
 
 
 function insertUser(username, password) {
-  return db.one('INSERT INTO users (username, password) VALUES ($1, $2);', [username, password]);
+  return db.one('INSERT INTO users (user_name, password) VALUES ($1, $2) returning user_id;', [username, password]);
 };
 
 function insertPost(title, category, password, user_id) {
@@ -21,9 +21,24 @@ function getPosts() {
   return db.any('SELECT * FROM posts;')
 };
 
+function getUserByName(user_name) {
+  return db.oneOrNone('SELECT user_id FROM users where user_name = $1;', [user_name]);
+};
+
+function getPostById(id) {
+  return db.one('SELECT * FROM posts WHERE post_id = $1;', [id])
+}
+
+function deletePostById(id) {
+  return db.oneOrNone('DELETE FROM posts WHERE post_id = $1;', [id]);
+}
+
 
 module.exports = {
   insertUser,
   insertPost,
-  getPosts
+  getPosts,
+  getUserByName,
+  getPostById,
+  deletePostById
 };
